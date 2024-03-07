@@ -1,4 +1,3 @@
-{% extends 'blog/base.html' %}
 {% load static %}
 
 <html>
@@ -10,18 +9,18 @@
         <title>Blog Django Girls</title>
     </head>
     <body>
-    {% block content %}
-        <! -- abaixo estamos pegando uma variável post, dentro da lista de posts -->
-        {% for post in posts %}
-        <div class="post">
-            <div class="date">
-                <p>published: {{ post.published_date }}</p>
+    <div class="page-header">
+        <h1><a href="/">Django Girls Blog</a></h1>
+    </div>
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+            {% block content %}
+
+            {% endblock %}
             </div>
-            <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
-            <p>{{ post.text|linebreaksbr }}</p>
         </div>
-        {% endfor %}
-    {% endblock %}
+    </div>
     </body>
 </html>
 
