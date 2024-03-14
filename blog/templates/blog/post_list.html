@@ -1,27 +1,36 @@
 {% extends 'blog/base.html' %}
 {% load static %}
 
-<html>
-    <head>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-        <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-        <title>Blog Django Girls</title>
-    </head>
-    <body>
-    {% block content %}
-        <! -- abaixo estamos pegando uma variável post, dentro da lista de posts -->
-        {% for post in posts %}
+{% block content %}
+    <!-- Loop pelos posts -->
+    {% for post in posts %}
         <div class="post">
             <div class="date">
-                <p>published: {{ post.published_date }}</p>
+                <p>publicado: {{ post.published_date }}</p>
             </div>
             <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
             <p>{{ post.text|linebreaksbr }}</p>
         </div>
-        {% endfor %}
-    {% endblock %}
-    </body>
-</html>
+    {% endfor %}
+
+    <!-- Links de paginação -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if posts.has_previous %}
+                <a href="?page=1">&laquo; Primeira</a>
+                <a href="?page={{ posts.previous_page_number }}">Anterior</a>
+            {% endif %}
+
+            <span class="current">
+                Página {{ posts.number }} de {{ posts.paginator.num_pages }}.
+            </span>
+
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}">Próxima</a>
+                <a href="?page={{ posts.paginator.num_pages }}">Última &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}
+
 
